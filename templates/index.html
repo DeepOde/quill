@@ -3,20 +3,24 @@
   <head>
     <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
- 
- 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  
-    <!-- Latest compiled JavaScript -->
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   <script>
+  last = ''
+  current = []
+  saved = []
+  
+  function save() {
+    saved = current;
+  }
+  
+  function load() {
+    current = saved;
+    update_buttons(current);
+  }
   
   function update_buttons(c) {
     document.getElementById("s0").value = c[0];
@@ -54,8 +58,10 @@
       name: name.value,
       message: message.value
     };*/
-    document.getElementById('story').value += no+' '
-	
+    if (no != '') {
+	    document.getElementById('story').value += no+' ';
+	}
+	last = no;
     fetch('/res', {
       method: "POST",
       credentials: "include",
@@ -74,6 +80,7 @@
           //console.log(data);
 		  choices = data
 		  update_buttons(choices)
+		  current = choices
         });
       })
       .catch(function (error) {
@@ -84,56 +91,73 @@
   </script>
   </head>
   <body onload=submit_message('')>
+  
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand text-white" href="#">
+    <img src="{{ url_for('static', filename='logo.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
+    Quill <i>AI</i><small class="text-light">&nbsp; <i>By Deep</i></small>
+  </a>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="https://github.com/DeepOde/quill">View project on Github</a>
+    </li><!--
+    <li class="nav-item">
+      <a class="nav-link" href="#">Contact</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Contribute on Github</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Coming soon</a>
+    </li>-->
+  </ul>
+  </nav>
+
+
   <div class="form-group">
   <label for="usr">Your own story:</label>
   <textarea type="text" class="form-control" id="story"></textarea>
   </div>
-  <div class="btn-group btn-group-justified">
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s0">Apple</button>
+  
+  <div class="btn-group d-flex w-100" role="group">
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s0">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s1">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1"id="s2">Click Load New</button>
   </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s1">Samsung</button>
+  
+  <div class="btn-group d-flex w-100" role="group">
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s3">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s4">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1"id="s5">Click Load New</button>
   </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary"id="s2">Sony</button>
+  
+  <div class="btn-group d-flex w-100" role="group">
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s6">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s7">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1"id="s8">Click Load New</button>
   </div>
-</div>
-  <div class="btn-group btn-group-justified">
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary"id="s3">Apple</button>
+  
+  <div class="btn-group d-flex w-100" role="group">
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s9">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1" id="s10">Click Load New</button>
+  <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary w-100 m-1"id="s11">Click Load New</button>
   </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary"id="s4">Samsung</button>
+  
+  <div><mark  id="status">Using Harry Potter novels as a base, support for using your favorite novel will be added in next phase.</br>AI is currently taught only first 2 Harry Potter novels...will be fixed soon.</mark></div>
+  <div class="btn-group d-flex w-100" role="group">
+  <button type="button" onclick=submit_message('') value='' class="btn btn-dark w-100 m-1" id="btnnew">Load new</button>
+  <button type="button" onclick=save() value='' class="btn btn-dark w-100 m-1"id="btnsave">Save these</button>
+  <button type="button" onclick=load() value='' class="btn btn-dark w-100 m-1"id="btnload">Load saved</button>
   </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary"id="s5">Sony</button>
-  </div>
-</div>
-  <div class="btn-group btn-group-justified">
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s6">Apple</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s7">Samsung</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s8">Sony</button>
-  </div>
-</div>
-  <div class="btn-group btn-group-justified">
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s9">Apple</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s10">Samsung</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" onclick=submit_message(this.value) value='' class="btn btn-primary" id="s11">Sony</button>
-  </div>
-</div>
-
-  </body>
+  
+  </br>
+  <div>
+  <ul><span class="text-success">About this tool:</span>
+    <li  class="text-body">I made this tool as a learning exercise and you can use it for either fun or to get out of writer's block if you want to write a HP fan-fiction story ^^"! <a href="https://www.reddit.com/r/harrypotter/comments/hjvpl2/harry_potter_written_by_a_bot/">Click here to see examples.</a></li>
+    <li class="text-body">This tool shows suggestions much like your phone keyboard, except that it has learnt from novels and not from the words you use most.</li>
+	<li class="text-body">Select any one of the suggestions and it will show you other words which you can add to it, you can copy-paste above story to format it as you will.</li>
+	<li class="text-body">TIP: If you want to get more creative suggestions, please consider using "Load New" button until you find something intresting. You'll mostly see repetitive suggestions, this is because AI is trained on only 2 books, training on more books slows down response as I'm running on a free server which is slow, I'll soon consider monetizing and switching to paid server once I've more things to put on site.</li>
+  </ul></div></body>
 </html>
 <div class="mb-3" id="messages"></div>
 	  

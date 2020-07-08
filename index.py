@@ -1,8 +1,15 @@
 from flask import Flask, render_template, request, jsonify
 import random
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 books = []
 books.append('teach/hp1.txt')
+books.append('teach/hp2.txt')
+#books.append('teach/hp3.txt')
+#books.append('teach/hp4.txt')
+#books.append('teach/hp5.txt')
+#books.append('teach/hp6.txt')
+#books.append('teach/hp7.txt')
+
 def get_wordlist(books, lower=False):
     '''Return complete book in form of list, each entry containing one word
     '''
