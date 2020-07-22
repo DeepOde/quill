@@ -27,15 +27,9 @@ def get_wordlist(books, lower=False):
             print("Wordlist prepared for "+b+"!")
 
     return wordlist
+
 wordlist = get_wordlist(books)
-
-@app.route('/')
-def hello_world():
-    return render_template('index.html')
-
-@app.route('/res', methods=['POST'])
-def res():
-    order = 2 #In future, let user set this
+order = 2 #In future, let user set this
 
     worddict = {} #Each key is string representing word, value will be list of words appearing after string in key
 
@@ -45,6 +39,12 @@ def res():
             append_to_value = ' '.join(wordlist[i+order:i+order+order])
             worddict[key] = worddict.get(key, []) + [append_to_value]
     
+@app.route('/')
+def hello_world():
+    return render_template('index.html')
+
+@app.route('/res', methods=['POST'])
+def res():
     req = ''
     req = request.get_json()
     #print(type(req))
